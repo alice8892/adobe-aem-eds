@@ -35,8 +35,8 @@ const blockConfig = {
     [large]: ['l', 'l', 'l', 'l'],
   },
   [pill]: {
-    [small]: ['s', 's', 's', 's'],
-    [medium]: ['m', 'm', 'm', 'm'],
+    [small]: ['s', 's', 's', 'm'],
+    [medium]: ['m', 'm', 'm', 'l'],
     [large]: ['l', 'm', 'm', 'l'],
   },
 };
@@ -95,6 +95,19 @@ function decorateClose(el) {
   el.appendChild(btn);
 }
 
+function decoratePill(el) {
+  decorateClose(el);
+  if (el.classList.contains('flexible')) {
+    const innards = [
+      el.querySelector('.background'),
+      el.querySelector('.foreground'),
+      el.querySelector('.close'),
+    ];
+    const inner = createTag('div', { class: 'flexible-inner' }, innards);
+    el.appendChild(inner);
+  }
+}
+
 function decorateLayout(el) {
   const elems = el.querySelectorAll(':scope > div');
   if (elems.length > 1) decorateBlockBg(el, elems[0]);
@@ -112,6 +125,7 @@ function decorateLayout(el) {
   media?.classList.toggle('image', (media && !media.classList.contains('text')));
   foreground?.classList.toggle('no-image', (!media && !iconArea));
   if (el.classList.contains('closure')) decorateClose(el);
+  if (el.classList.contains('pill')) decoratePill(el);
   return foreground;
 }
 
