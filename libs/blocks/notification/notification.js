@@ -64,7 +64,7 @@ function getOpts(el) {
 function getBlockData(el) {
   const variant = variants.find((varClass) => el.classList.contains(varClass)) || defaultVariant;
   const size = sizes.find((sizeClass) => el.classList.contains(sizeClass)) || defaultSize;
-  const fontSizes = blockConfig[variant][size];
+  const fontSizes = [...blockConfig[variant][size]];
   if (el.classList.contains('s-button')) fontSizes.splice(3, 1, 'm');
   return { fontSizes, options: { ...getOpts(el) } };
 }
@@ -125,7 +125,7 @@ function decorateLayout(el) {
   media?.classList.toggle('image', (media && !media.classList.contains('text')));
   foreground?.classList.toggle('no-image', (!media && !iconArea));
   if (el.classList.contains('closure')) decorateClose(el);
-  if (el.classList.contains('pill')) decoratePill(el);
+  if (el.classList.contains(pill)) decoratePill(el);
   return foreground;
 }
 
