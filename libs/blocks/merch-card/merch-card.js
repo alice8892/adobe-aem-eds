@@ -214,9 +214,10 @@ const parseContent = async (el, merchCard) => {
 };
 
 const getBadgeStyle = (badgeMetadata) => {
-  const badgeStyleRegex = /^#[0-9a-fA-F]+, #[0-9a-fA-F]+(, #[0-9a-fA-F]+|transparent)?$/;
+  const badgeStyleRegex = /^#[0-9a-fA-F]+, #[0-9a-fA-F]+(, #[0-9a-fA-F]+)?$/;
   if (!badgeStyleRegex.test(badgeMetadata[0]?.innerText)) return null;
   const style = badgeMetadata[0].innerText.split(',').map((s) => s.trim());
+  if (style.length < 2) return null;
   const badgeBackgroundColor = style[0];
   const badgeColor = style[1];
   const borderColor = style[2] !== 'none' ? style[2] : null;
@@ -403,6 +404,11 @@ export default async function init(el) {
           merchCard.setAttribute('border-color', badge.borderColor);
         }
         merchCard.classList.add('badge-card');
+      } else if (badgeMetadata.children.length === 1) {
+        const borderColor = badgeMetadata.children[0].innerText.trim();
+        if (borderColor.startsWith('#')) {
+          merchCard.setAttribute('border-color', borderColor);
+        }
       }
     }
   }
