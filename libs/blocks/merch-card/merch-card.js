@@ -341,11 +341,9 @@ const setMiniCompareOfferSlot = (merchCard, offers) => {
 };
 
 const updateBigPrices = (merchCard) => {
-  const priceSpans = merchCard.querySelectorAll(
-    'strong > em > span[is="inline-price"]',
-  );
+  const prices = merchCard.querySelectorAll('strong > em > span[is="inline-price"]');
 
-  priceSpans.forEach((span) => {
+  prices.forEach((span) => {
     const strongTag = span.parentNode.parentNode;
     const emTag = span.parentNode;
     strongTag.replaceChild(span, emTag);
