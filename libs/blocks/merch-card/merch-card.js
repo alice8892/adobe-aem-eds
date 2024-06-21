@@ -400,15 +400,11 @@ export default async function init(el) {
         );
         merchCard.setAttribute('badge-color', badge.badgeColor);
         merchCard.setAttribute('badge-text', badge.badgeText);
-        if (badge.borderColor) {
-          merchCard.setAttribute('border-color', badge.borderColor);
-        }
+        if (badge.borderColor) merchCard.setAttribute('border-color', badge.borderColor);
         merchCard.classList.add('badge-card');
       } else if (badgeMetadata.children.length === 1) {
         const borderColor = badgeMetadata.children[0].innerText.trim();
-        if (borderColor.startsWith('#')) {
-          merchCard.setAttribute('border-color', borderColor);
-        }
+        if (borderColor.startsWith('#')) merchCard.setAttribute('border-color', borderColor);
       }
     }
   }
