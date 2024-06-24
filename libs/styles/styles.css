@@ -144,6 +144,10 @@
   --type-lockup-m-ls: -0.02em;
   --type-lockup-s-size: 22px;
   --type-lockup-s-ls: -0.02em;
+  --type-lockup-xs-size: 16px;
+  --type-lockup-xs-ls: 0;
+  --type-lockup-xxs-size: 11px;
+  --type-lockup-xxs-ls: -0.01em;
 
   /* z-index */
   --above-all: 9000; /* Used for page tools that overlay page content */
@@ -479,6 +483,18 @@ svg.icon-milo, img.icon-milo {
   justify-content: center;
 }
 
+.xxs-lockup .lockup-area {
+  font-size: var(--type-lockup-xxs-size);
+  letter-spacing:var(--type-lockup-xxs-ls);
+  gap: 4px;
+}
+
+.xs-lockup .lockup-area {
+  font-size: var(--type-lockup-xs-size);
+  letter-spacing:var(--type-lockup-xs-ls);
+  gap: 6px;
+}
+
 .s-lockup .lockup-area {
   font-size: var(--type-lockup-s-size);
   letter-spacing:var(--type-lockup-s-ls);
@@ -513,6 +529,8 @@ svg.icon-milo, img.icon-milo {
   line-height: 0;
 }
 
+.xxs-lockup .lockup-area img { height: var(--icon-size-xxs); }
+.xs-lockup .lockup-area img { height: var(--icon-size-xs); }
 .s-lockup .lockup-area img { height: var(--icon-size-s); }
 .m-lockup .lockup-area img { height: var(--icon-size-m); }
 .l-lockup .lockup-area img { height: var(--icon-size-l); }
