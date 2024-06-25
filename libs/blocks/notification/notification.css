@@ -161,22 +161,19 @@
   height: auto;
   max-width: none;
   margin-bottom: var(--spacing-xs);
-}
-
-.notification.ribbon .foreground.container .icon-area {
   flex-shrink: 0;
   display: flex;
   gap: var(--spacing-xs);
+}
+
+.notification.center .foreground.container .icon-area {
+  justify-content: center;
 }
 
 .notification.ribbon.space-between .foreground.container .icon-area {
   align-items: center;
   inline-size: auto;
   margin-inline-end: var(--spacing-xs);
-}
-
-.notification.ribbon.center .foreground.container .icon-area {
-  justify-content: center;
 }
 
 .notification .foreground.container .image :is(picture, video),

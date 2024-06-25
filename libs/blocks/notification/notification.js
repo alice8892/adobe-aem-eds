@@ -95,17 +95,14 @@ function decorateClose(el) {
   el.appendChild(btn);
 }
 
-function decoratePill(el) {
-  decorateClose(el);
-  if (el.classList.contains('flexible')) {
-    const innards = [
-      el.querySelector('.background'),
-      el.querySelector('.foreground'),
-      el.querySelector('.close'),
-    ];
-    const inner = createTag('div', { class: 'flexible-inner' }, innards);
-    el.appendChild(inner);
-  }
+function decorateFlexible(el) {
+  const innards = [
+    el.querySelector('.background'),
+    el.querySelector('.foreground'),
+    el.querySelector('.close'),
+  ];
+  const inner = createTag('div', { class: 'flexible-inner' }, innards);
+  el.appendChild(inner);
 }
 
 function decorateLayout(el) {
@@ -124,8 +121,8 @@ function decorateLayout(el) {
   el.classList.toggle('no-media', !media);
   media?.classList.toggle('image', (media && !media.classList.contains('text')));
   foreground?.classList.toggle('no-image', (!media && !iconArea));
-  if (el.classList.contains('closure')) decorateClose(el);
-  if (el.classList.contains(pill)) decoratePill(el);
+  if (el.matches(`:is(.${pill}, .${ribbon}):not(.no-closure)`)) decorateClose(el);
+  if (el.matches(`.${pill}.flexible`)) decorateFlexible(el);
   return foreground;
 }
 
