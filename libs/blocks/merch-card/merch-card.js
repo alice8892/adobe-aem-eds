@@ -214,7 +214,7 @@ const parseContent = async (el, merchCard) => {
 };
 
 const getBadgeStyle = (badgeMetadata) => {
-  const badgeStyleRegex = /^#[0-9a-fA-F]+, #[0-9a-fA-F]+$/;
+  const badgeStyleRegex = /^#[0-9a-fA-F]+, #[0-9a-fA-F]+(, #[0-9a-fA-F]+)?$/;
   if (!badgeStyleRegex.test(badgeMetadata[0]?.innerText)) return null;
   const style = badgeMetadata[0].innerText.split(',').map((s) => s.trim());
   if (style.length < 2) return null;
