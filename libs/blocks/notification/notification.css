@@ -31,6 +31,10 @@
   margin-bottom: var(--spacing-s);
 }
 
+.notification.ribbon.space-between [class*="heading-"] + p {
+  margin-bottom: 0;
+}
+
 .notification .foreground.container {
   display: flex;
   position: relative;
@@ -45,6 +49,22 @@
 .notification.ribbon .foreground.container {
   inline-size: 100%;
   margin-inline: 30px;
+  margin-block: 0;
+  padding-block: var(--spacing-s);
+}
+
+.notification .foreground.container [data-align=center],
+.notification.center .foreground.container,
+.notification.center .foreground.container > * {
+  text-align: center;
+  justify-content: center;
+}
+
+.notification.pill .foreground.container {
+  padding-inline: var(--spacing-xs) var(--spacing-xxs);
+  padding-block: var(--spacing-xs) var(--spacing-xxs);
+  margin: 0;
+  inline-size: 100%;
 }
 
 .notification.ribbon.xxs-padding .foreground.container {
@@ -99,6 +119,13 @@
   max-width: none;
   padding-top: 0;
   padding-bottom: 0;
+}
+
+.notification.pill .foreground.container .text {
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: start;
+  inline-size: 100%;
 }
 
 .notification.ribbon.space-between .foreground.container .text {
@@ -170,6 +197,12 @@
   justify-content: center;
 }
 
+.notification.pill .foreground.container .icon-area {
+  margin-inline-end: 0;
+  margin-block-end: var(--spacing-xs);
+  inline-size: auto;
+}
+
 .notification.ribbon.space-between .foreground.container .icon-area {
   align-items: center;
   inline-size: auto;
@@ -200,13 +233,6 @@
   margin-bottom: 0;
 }
 
-.notification .foreground.container [data-align=center],
-.notification.center .foreground.container,
-.notification.center .foreground.container > * {
-  text-align: center;
-  justify-content: center;
-}
-
 .notification.center .icon-area picture {
   display: flex;
   justify-content: center;
@@ -218,31 +244,17 @@
   margin-inline: auto;
 }
 
-.notification.pill .foreground.container {
-  padding: var(--spacing-xs);
-  margin: 0;
-  inline-size: 100%;
-}
-
-.notification.pill .foreground.container .text {
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: start;
-  inline-size: 100%;
-}
-
-.notification.pill .foreground.container .icon-area {
-  margin-inline-end: 0;
-  margin-block-end: var(--spacing-xs);
-  inline-size: auto;
-}
-
 .notification.pill .foreground.container .action-area {
   justify-content: flex-end;
 }
 
 .notification .flexible-inner {
   inline-size: 100%;
+}
+
+.notification.pill .foreground.container .text > :not(.action-area) {
+  padding-inline-end: var(--spacing-xxs);
+  inline-size: calc(100% - var(--spacing-xxs));
 }
 
 @media screen and (min-width: 600px) {
@@ -253,7 +265,7 @@
     margin-block: 0;
     margin-inline: auto;
     padding: var(--spacing-s) 0;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-s);
   }
 
   .notification:is(.full-width, .ribbon) .foreground.container {
@@ -326,6 +338,14 @@
     text-align: start;
   }
 
+  .notification.pill .foreground.container {
+    padding: var(--spacing-s);
+  }
+
+  .notification.pill:not(.flexible) .foreground.container {
+    inline-size: var(--grid-container-width);
+  }
+
   .notification.pill .foreground.container .text {
     align-items: center;
     text-align: center;
@@ -349,9 +369,20 @@
     min-inline-size: 300px;
     border-radius: 16px;
   }
+
+  .notification.pill .foreground.container .text > :not(.action-area) {
+    padding-inline-end: unset;
+    inline-size: unset;
+  }
 }
 
 @media screen and (min-width: 1200px) {
+  .notification:not(.pill, .ribbon) .foreground.container {
+    inline-size: calc(var(--grid-container-width) * (8 / 12));
+    margin-inline: var(--grid-margins-width-8);
+    gap: var(--spacing-m);
+  }
+
   .notification:is(.full-width, .ribbon) .foreground.container {
     gap: var(--spacing-xl);
   }
@@ -360,15 +391,13 @@
     inline-size: unset;
   }
 
-  .notification:not(.pill, .ribbon) .foreground.container {
-    inline-size: calc(var(--grid-container-width) * (8 / 12));
-    margin-inline: var(--grid-margins-width-8);
-    gap: var(--spacing-m);
-  }
-
   .notification.max-width-10-desktop .foreground.container {
     margin-inline: var(--grid-margins-width-10);
     gap: var(--spacing-l);
+  }
+
+  .notification.full-width .foreground.container {
+    margin-inline: var(--grid-margins-width);
   }
 
   .notification .foreground.container > div {
@@ -419,8 +448,9 @@
     margin-block-end: 0;
   }
 
-  .notification.pill [class*="heading-"] {
+  .notification.pill .foreground.container .text [class*="heading-"] {
     margin-inline-end: var(--spacing-xxs);
+    margin-block-end: 0;
   }
 
   .notification.pill p {
@@ -433,6 +463,7 @@
 
   .notification.pill .foreground.container {
     padding-block: var(--spacing-xs);
+    padding-inline: 0;
     margin: 0;
   }
 
