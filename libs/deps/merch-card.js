@@ -1,4 +1,4 @@
-// branch: main commit: fbbefe1b71216b73b1e41d50997927fbc7340473 Tue, 25 Jun 2024 15:33:55 GMT
+// branch: main commit: 5a7dcb9a751bfa0d049a3f63e708e60c1e02f896 Thu, 27 Jun 2024 18:26:46 GMT
 import{html as a,LitElement as j}from"/libs/deps/lit-all.min.js";import{LitElement as q,html as T,css as F}from"/libs/deps/lit-all.min.js";var s=class extends q{static properties={size:{type:String,attribute:!0},src:{type:String,attribute:!0},alt:{type:String,attribute:!0},href:{type:String,attribute:!0}};constructor(){super(),this.size="m",this.alt=""}render(){let{href:e}=this;return e?T`<a href="${e}">
                   <img src="${this.src}" alt="${this.alt}" loading="lazy" />
               </a>`:T` <img src="${this.src}" alt="${this.alt}" loading="lazy" />`}static styles=F`
@@ -395,8 +395,10 @@ import{html as a,LitElement as j}from"/libs/deps/lit-all.min.js";import{LitEleme
         @media screen and ${u(i)} {
             :host([size='wide']),
             :host([size='super-wide']) {
-                grid-column: span 2;
+                grid-column: span 3;
                 width: 100%;
+                max-width: var(--consonant-merch-card-tablet-wide-width);
+                margin: 0 auto;
             }
         }
 
@@ -428,6 +430,7 @@ import{html as a,LitElement as j}from"/libs/deps/lit-all.min.js";import{LitEleme
 
     /* responsive width */
     --consonant-merch-card-mobile-width: 300px;
+    --consonant-merch-card-tablet-wide-width: 700px;
 
     /* spacing */
     --consonant-merch-spacing-xxxs: 4px;
@@ -910,6 +913,10 @@ merch-card[variant="mini-compare-chart"] .footer-row-cell-description a {
 
     merch-card[variant="mini-compare-chart"] span.placeholder-resolved[data-template="strikethrough"] {
         font-size: var(--consonant-merch-card-body-xs-font-size);
+    }
+
+    html[lang="he"] merch-card[variant="mini-compare-chart"] [is="inline-price"] .price-recurrence::before {
+        content: "\\200B";
     }
 
     merch-card[variant="mini-compare-chart"] [slot="price-commitment"] {
