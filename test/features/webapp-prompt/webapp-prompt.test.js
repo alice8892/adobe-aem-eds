@@ -116,16 +116,43 @@ describe('PEP', () => {
   });
 
   describe('PEP configuration tests', () => {
-    it('should use config values when metadata loader color or duration are not provided', async () => {
+    it('should use config values when metadata loader color, duration, or dismissal options are not provided', async () => {
       sinon.restore();
       stub(window, 'fetch').callsFake(async (url) => {
-        if (url.includes('pep-prompt-content.plain.html')) return mockRes({ payload: pepPromptContent({ ...defaultConfig, color: false, loaderDuration: false }) });
+        if (url.includes('pep-prompt-content.plain.html')) {
+          return mockRes({
+            payload: pepPromptContent({
+              ...defaultConfig,
+              color: false,
+              loaderDuration: false,
+              animationCount: false,
+              animationDuration: false,
+              tooltipMessage: false,
+              tooltipDuration: false,
+            }),
+          });
+        }
         return null;
       });
       const pep = await initPep({});
       await clock.runAllAsync();
-      const { 'loader-color': pepColor, 'loader-duration': pepDuration } = pep.options;
-      expect(!!pepColor && !!pepDuration).to.equal(true);
+      const {
+        'loader-color': pepColor,
+        'loader-duration': pepDuration,
+        'dismissal-animation-count': animCount,
+        'dismissal-animation-duration': animDuration,
+        'dismissal-tooltip-message': tooltipMessage,
+        'dismissal-tooltip-duration': tooltipDuration,
+      } = pep.options;
+      const configPresent = [
+        pepColor,
+        pepDuration,
+        animCount,
+        animDuration,
+        tooltipMessage,
+        tooltipDuration,
+      ].reduce((acc, x) => acc && !!x, true);
+      expect(configPresent).to.equal(true);
     });
   });
 
@@ -171,6 +198,35 @@ describe('PEP', () => {
       await clock.runAllAsync();
       document.querySelector(allSelectors.closeIcon).click();
       expect(document.activeElement).to.equal(document.querySelector(allSelectors.appSwitcher));
+    });
+  });
+
+  describe('PEP dismissal tests', () => {
+    it('adds three rings to the app switcher and removes them after the required amount of time', async () => {
+      await initPep({});
+      await clock.runAllAsync();
+      document.querySelector(allSelectors.closeIcon).click();
+      expect([...document.querySelectorAll(allSelectors.indicatorRing)].length).to.equal(3);
+      await clock.runAllAsync();
+      expect([...document.querySelectorAll(allSelectors.indicatorRing)].length).to.equal(0);
+    });
+
+    it('adds a data attribute to the app switcher with the correct data and removes it after the allotted time', async () => {
+      await initPep({});
+      await clock.runAllAsync();
+      document.querySelector(allSelectors.closeIcon).click();
+      expect(document.querySelector(allSelectors.tooltip)).to.exist;
+      await clock.runAllAsync();
+      expect(document.querySelector(allSelectors.tooltip)).to.not.exist;
+    });
+
+    it('removes the dismissal animation and the tooltip upon clicking the anchor element', async () => {
+      await initPep({});
+      await clock.runAllAsync();
+      document.querySelector(allSelectors.closeIcon).click();
+      expect(document.querySelector(allSelectors.tooltip)).to.exist;
+      document.querySelector(allSelectors.appSwitcher).click();
+      expect(document.querySelector(allSelectors.tooltip)).to.not.exist;
     });
   });
 

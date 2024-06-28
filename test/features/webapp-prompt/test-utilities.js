@@ -1,6 +1,6 @@
 import { setViewport } from '@web/test-runner-commands';
 import sinon from 'sinon';
-import init from '../../../libs/features/webapp-prompt/webapp-prompt.js';
+import init, { DISMISSAL_CONFIG } from '../../../libs/features/webapp-prompt/webapp-prompt.js';
 import { viewports, mockRes as importedMockRes } from '../../blocks/global-navigation/test-utilities.js';
 import { getConfig, loadStyle, setConfig, updateConfig } from '../../../libs/utils/utils.js';
 
@@ -17,6 +17,8 @@ export const allSelectors = {
   progressWrapper: '.appPrompt-progressWrapper',
   progress: '.appPrompt-progress',
   appSwitcher: '#unav-app-switcher',
+  indicatorRing: '.coach-indicator-ring',
+  tooltip: '[data-pep-dismissal-tooltip]',
 };
 
 export const defaultConfig = {
@@ -24,6 +26,7 @@ export const defaultConfig = {
   loaderDuration: 7500,
   redirectUrl: 'https://www.adobe.com/?pep=true',
   productName: 'photoshop',
+  ...DISMISSAL_CONFIG,
 };
 
 export const mockRes = importedMockRes;
