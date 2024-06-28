@@ -1,0 +1,13 @@
+.showAssetbtn{
+  width: 80%;
+  border-radius: 0px !important;
+}
+.titleDesc{
+  font-size: medium;
+}
+.assetBlock{
+  width: 80%;
+  background: lightgrey;
+  margin: 20px;
+  padding: 1px;
+}
