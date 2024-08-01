@@ -17,6 +17,21 @@ import {
   getMetadata,
 } from '../utils/utils.js';
 
+import {
+  sampleRUM,
+  buildBlock,
+  loadHeader,
+  loadFooter,
+  decorateButtons,
+  decorateIcons,
+  decorateSections,
+  decorateBlocks,
+  decorateTemplateAndTheme,
+  waitForLCP,
+  loadBlocks,
+  loadCSS,
+} from './aem.js';
+
 // Production Domain
 const prodDomains = ['milo.adobe.com'];
 
@@ -146,6 +161,33 @@ const config = {
   breadcrumbs: 'on',
   // taxonomyRoot: '/your-path-here',
 };
+
+/**
+ * Builds all synthetic blocks in a container element.
+ * @param {Element} main The container element
+ */
+function buildAutoBlocks(main) {
+  try {
+    buildHeroBlock(main);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Blocking failed', error);
+  }
+}
+
+/**
+ * Decorates the main element.
+ * @param {Element} main The main element
+ */
+// eslint-disable-next-line import/prefer-default-export
+export function decorateMain(main) {
+  // hopefully forward compatible button decoration
+  decorateButtons(main);
+  decorateIcons(main);
+  buildAutoBlocks(main);
+  decorateSections(main);
+  decorateBlocks(main);
+}
 
 const eagerLoad = (img) => {
   img?.setAttribute('loading', 'eager');
